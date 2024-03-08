@@ -29,7 +29,15 @@ resource "tls_self_signed_cert" "mtls_certificate" {
   is_ca_certificate = true
   validity_period_hours = 8760
   dns_names             = [  "*.${local.domain}", local.domain]
-  allowed_uses = [  ]
+  allowed_uses = [
+    "cert_signing",
+    "crl_signing",
+    "code_signing",
+    "server_auth",
+    "client_auth",
+    "digital_signature",
+    "key_encipherment",
+  ]
   lifecycle {
     create_before_destroy = true
   }

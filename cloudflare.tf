@@ -59,7 +59,7 @@ resource "cloudflare_authenticated_origin_pulls_certificate" "zone_app_cert" {
   zone_id     = var.cloudflare_zone_id
   certificate = tls_self_signed_cert.mtls_leaf_certificate.cert_pem
   private_key = tls_private_key.mtls_key.private_key_pem
-  type        = "per-hostname"
+  type        = "per-zone"
 }
 
 resource "tls_self_signed_cert" "mtls_leaf_certificate" {
@@ -71,7 +71,9 @@ resource "tls_self_signed_cert" "mtls_leaf_certificate" {
   is_ca_certificate = false
   validity_period_hours = 8760
   dns_names             = [  "*.${local.domain}", local.domain]
-  allowed_uses = [  ]
+  allowed_uses = [
+    "client_auth",
+  ]
   lifecycle {
     create_before_destroy = true
   }
