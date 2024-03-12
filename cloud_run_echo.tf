@@ -87,6 +87,13 @@ resource "google_compute_backend_service" "gcr_echo_backend" {
     enable = true
     sample_rate = 1
   }
+  custom_request_headers = [
+    "mtls-Client-Geo-Location: {client_region_subdivision}, {client_city}",
+    "mtls-Client-Certificate-Present: {client_cert_present}",
+    "mtls-Client-Certificate-Valid: {client_cert_chain_verified}",
+    "mtls-Client-Certificate-Issuer: {client_cert_issuer_dn}",
+    "mtls-Client-Certificate-Subject: {client_cert_subject_dn}",
+  ]
   #security_policy       = google_network_security_server_tls_policy.mtls_server_policy.name
 
   dynamic "backend" {
