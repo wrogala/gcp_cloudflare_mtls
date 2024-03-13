@@ -82,7 +82,7 @@ resource "google_certificate_manager_trust_config" "mtls_trust_config" {
 
   trust_stores {
     trust_anchors { 
-      pem_certificate =  file("${path.module}/authenticated_origin_pull_ca.pem")
+      pem_certificate =  file("${path.module}/secrets/authenticated_origin_pull_ca.pem")
     }
   }
 
